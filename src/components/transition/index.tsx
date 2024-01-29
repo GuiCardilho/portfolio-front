@@ -18,7 +18,7 @@ export const TransitionDefault = ({
 			leave="ease-in duration-200"
 			leaveFrom="opacity-100"
 			leaveTo="opacity-0"
-			className={`flex flex-col flex-1 w-full h-full gap-8 tall:gap-4 ${className}`}
+			className={` ${className}`}
 		>
 			{children}
 		</Transition>

@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
 interface IUseStore {
-	enabled: boolean;
+	enabled: "dark" | "light";
 	toggle: () => void;
 }
 
 const useStore = create<IUseStore>((set) => ({
-	enabled: false,
-	toggle: () => set((state) => ({ enabled: !state.enabled })),
+	enabled: "dark",
+	toggle: () => set((state) => ({ enabled: state.enabled === "dark" ? "light" : "dark" })),
 }));
 
 export { useStore as useTheme };

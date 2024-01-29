@@ -7,9 +7,11 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true
+
 		},
 		"ignore": ["./next/**/*", "./out/**/*", "node_modules/**/*"],
 		"include": ["./src/**/*", "./src/**/.*", "./src/**/.*/**/*"]
+		
 		
 	},
 	"formatter": {
