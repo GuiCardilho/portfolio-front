@@ -84,7 +84,7 @@
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
-    width: 0px;
+    width: 5px;
   }
 
   *::-webkit-scrollbar-track {

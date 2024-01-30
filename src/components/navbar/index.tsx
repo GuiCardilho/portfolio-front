@@ -30,7 +30,7 @@ export const Navbar = () => {
 
 	return (
 		<div
-			className={clsx("flex justify-around py-4 ", {
+			className={clsx("flex justify-around py-4 fixed z-10 w-full", {
 				"bg-backgroundCustom-primary text-white": themeSelection === "dark",
 				"bg-foregroundCustom-primary text-black shadow-lg border-b-1 border-solid border-zinc-200":
 					themeSelection === "light",

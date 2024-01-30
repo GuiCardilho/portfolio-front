@@ -1,7 +1,8 @@
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
-import clsx from "clsx";
+import { BodyTheme } from "./components/body";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -21,7 +22,8 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="pt-BR">
-			<body className={clsx(`${poppins.className}  z-0 overflow-y-hidden`)}>{children}</body>
+			<BodyTheme className={poppins.className}>{children}</BodyTheme>
+			<Analytics />
 		</html>
 	);
 }
