@@ -2,31 +2,36 @@
 import { useTheme } from "@/store/theme";
 import { Switch } from "@headlessui/react";
 
+import { useHomeSection } from "@/store/homeSection";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { HiMoon, HiOutlineMoon, HiOutlineSun, HiSun } from "react-icons/hi";
 import { TransitionDefault } from "../transition";
 
 export const Navbar = () => {
 	const { enabled: themeSelection, toggle } = useTheme();
+	const navigate = useRouter();
 
 	const links = [
 		{
-			name: "Home",
-			href: "/",
+			name: "Inicio",
+			to: "inicio",
 		},
 		{
-			name: "About",
-			href: "/about",
+			name: "Sobre",
+			to: "sobre",
 		},
 		{
-			name: "Projects",
-			href: "/projects",
+			name: "Serviços",
+			to: "servicos",
 		},
 		{
-			name: "Contact",
-			href: "/contact",
+			name: "Contato",
+			to: "contato",
 		},
 	];
+
+	const { setSection } = useHomeSection();
 
 	return (
 		<div
@@ -55,22 +60,25 @@ export const Navbar = () => {
 			<div>
 				<ul className="gap-6 font-medium hidden sm:flex">
 					{links.map((link) => (
-						<li
-							key={link.name}
-							className={clsx("cursor-pointer transition-all font-medium", {
-								"font-bold text-transparent bg-gradient-to-r from-violet-600 to-pink-400 bg-clip-text":
-									link.href === "/" && themeSelection === "dark",
+						<li key={link.name}>
+							<button
+								type="button"
+								className={clsx("cursor-pointer transition-all font-medium", {
+									"font-bold text-transparent bg-gradient-to-r from-violet-600 to-pink-400 bg-clip-text":
+										link.to === "/" && themeSelection === "dark",
 
-								"hover:text-violet-500 active:text-violet-400": link.href !== "/" && themeSelection === "dark",
-								"from-violet-600 to-pink-400": themeSelection === "dark",
+									"hover:text-violet-500 active:text-violet-400": link.to !== "/" && themeSelection === "dark",
+									"from-violet-600 to-pink-400": themeSelection === "dark",
 
-								"font-bold text-transparent bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text":
-									link.href === "/" && themeSelection === "light",
-								"hover:text-blue-500 active:text-cyan-600": link.href !== "/" && themeSelection === "light",
-								"from-blue-500 to-cyan-600": themeSelection === "light",
-							})}
-						>
-							{link.name}
+									"font-bold text-transparent bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text":
+										link.to === "/" && themeSelection === "light",
+									"hover:text-blue-500 active:text-cyan-600": link.to !== "/" && themeSelection === "light",
+									"from-blue-500 to-cyan-600": themeSelection === "light",
+								})}
+								onClick={() => setSection(link.to)}
+							>
+								{link.name}
+							</button>
 						</li>
 					))}
 				</ul>

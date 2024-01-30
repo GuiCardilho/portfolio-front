@@ -2,6 +2,7 @@
 
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/shadcn/ui/carousel";
 import { TransitionDefault } from "@/components/transition";
+import { useHomeSection } from "@/store/homeSection";
 import { useTheme } from "@/store/theme";
 import clsx from "clsx";
 import { useMotionValueEvent, useScroll } from "framer-motion";
@@ -23,6 +24,8 @@ export default function Page() {
 	const [directionScroll, setDirectionScroll] = useState<"up" | "down" | null>("down");
 	const [verifyScroll, setVerifyScroll] = useState(true);
 	const [timeOut, setTimeOut] = useState<NodeJS.Timeout | null>(null);
+	const [mounted, setMounted] = useState(false);
+	const { section } = useHomeSection();
 
 	const { scrollY } = useScroll();
 
@@ -88,8 +91,6 @@ export default function Page() {
 		if (!api) {
 			return;
 		}
-
-		console.log("api", api);
 
 		if (directionScroll === "up") {
 			api.scrollTo(currentSlider - 1);
@@ -254,6 +255,34 @@ export default function Page() {
 		},
 	];
 
+	useEffect(() => {
+		console.log("section", section);
+		if (!section) {
+			return;
+		}
+
+		if (section === "inicio") {
+			api?.scrollTo(0);
+		} else if (section === "sobre") {
+			api?.scrollTo(1);
+		} else if (section === "servicos") {
+			api?.scrollTo(2);
+		} else if (section === "contato") {
+			api?.scrollTo(3);
+		}
+	}, [section, api]);
+
+	useEffect(() => {
+		if (mounted) {
+			return;
+		}
+		setMounted(true);
+	}, [mounted]);
+
+	if (!mounted) {
+		return null;
+	}
+
 	return (
 		<div className="flex w-full h-full">
 			<div
@@ -351,6 +380,7 @@ export default function Page() {
 								>
 									<Image
 										src="/avatar.png"
+										priority
 										alt="Hero"
 										className="w-[250px]  h-[250px] sm:w-[500px] sm:h-[500px]"
 										height={800}
@@ -382,6 +412,7 @@ export default function Page() {
 								>
 									<Image
 										src="/avatar.png"
+										priority
 										alt="Hero"
 										className="w-[250px]  h-[250px] sm:w-[500px] sm:h-[500px]"
 										height={800}
