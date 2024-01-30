@@ -4,13 +4,12 @@ import { Switch } from "@headlessui/react";
 
 import { useHomeSection } from "@/store/homeSection";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
-import { HiMoon, HiOutlineMoon, HiOutlineSun, HiSun } from "react-icons/hi";
+import { HiFaceSmile, HiOutlineFaceSmile } from "react-icons/hi2";
+import { IoSkull, IoSkullOutline } from "react-icons/io5";
 import { TransitionDefault } from "../transition";
 
 export const Navbar = () => {
 	const { enabled: themeSelection, toggle } = useTheme();
-	const navigate = useRouter();
 
 	const links = [
 		{
@@ -87,14 +86,14 @@ export const Navbar = () => {
 			<div className="flex  gap-1 sm:gap-5 justify-between">
 				<div className="relative w-6">
 					<TransitionDefault active={themeSelection !== "dark"} className="absolute left-0">
-						<HiSun className="text-2xl text-yellow-400 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4" />
+						<HiFaceSmile className="text-2xl text-yellow-400 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4" />
 					</TransitionDefault>
 
 					<TransitionDefault
 						active={themeSelection === "dark"}
 						className="absolute left-0 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4"
 					>
-						<HiOutlineSun className="text-2xl" />
+						<HiOutlineFaceSmile className="text-2xl" />
 					</TransitionDefault>
 				</div>
 
@@ -102,7 +101,7 @@ export const Navbar = () => {
 					checked={themeSelection === "dark"}
 					onChange={toggle}
 					className={`${
-						themeSelection === "dark" ? "bg-gray-400" : "bg-yellow-400"
+						themeSelection === "dark" ? "bg-red-700" : "bg-yellow-400"
 					} relative inline-flex h-6 w-11 items-center rounded-full`}
 				>
 					<span className="sr-only">Enable notifications</span>
@@ -118,14 +117,14 @@ export const Navbar = () => {
 						active={themeSelection === "dark"}
 						className="absolute right-0 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4"
 					>
-						<HiMoon className="text-2xl" />
+						<IoSkull className="text-2xl text-red-600" />
 					</TransitionDefault>
 
 					<TransitionDefault
 						active={themeSelection !== "dark"}
 						className="absolute right-0 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4"
 					>
-						<HiOutlineMoon className="text-2xl" />
+						<IoSkullOutline className="text-2xl" />
 					</TransitionDefault>
 				</div>
 			</div>
