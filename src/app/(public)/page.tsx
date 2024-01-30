@@ -29,7 +29,7 @@ export default function Page() {
 	const [directionScroll, setDirectionScroll] = useState<"up" | "down" | null>("down");
 	const [verifyScroll, setVerifyScroll] = useState(true);
 	const [timeOut, setTimeOut] = useState<NodeJS.Timeout | null>(null);
-	const [mounted, setMounted] = useState(false);
+
 	const { section } = useHomeSection();
 
 	const { scrollY } = useScroll();
@@ -328,15 +328,12 @@ export default function Page() {
 		}
 	}, [section, api]);
 
+	const [mounted, setMounted] = useState(false);
 	useEffect(() => {
-		if (mounted) {
-			return;
-		}
 		setMounted(true);
-	}, [mounted]);
-
+	}, []);
 	if (!mounted) {
-		return null;
+		return null; // return this null to avoid hydration errors
 	}
 
 	return (
