@@ -6,7 +6,7 @@ interface IUseStore {
 }
 
 const useStore = create<IUseStore>((set) => ({
-	enabled: "dark",
+	enabled: "light",
 	toggle: () => set((state) => ({ enabled: state.enabled === "dark" ? "light" : "dark" })),
 }));
 

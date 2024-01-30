@@ -8,7 +8,12 @@ import clsx from "clsx";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { HiOutlineArrowCircleDown, HiOutlineArrowCircleRight, HiOutlineArrowCircleUp } from "react-icons/hi";
+import {
+	HiOutlineArrowCircleDown,
+	HiOutlineArrowCircleRight,
+	HiOutlineArrowCircleUp,
+	HiOutlineFire,
+} from "react-icons/hi";
 
 export default function Page() {
 	const { enabled: themeSelection } = useTheme();
@@ -255,6 +260,57 @@ export default function Page() {
 		},
 	];
 
+	const servicesHacker = [
+		{
+			title: "Front-End Stealth",
+			subtitle: "Navegando nas Sombras",
+			description:
+				"Camuflando interfaces com destreza, transformo códigos em experiências sorrateiras usando Next e TailwindCSS. Uma fusão de elegância e obscuridade.",
+		},
+		{
+			title: "Back-End Criptográfico",
+			subtitle: "Algoritmos Invioláveis",
+			description:
+				"Mestre das artes obscuras do back-end, conjuro APIs invulneráveis com NodeJS e ExpressJS. Meus algoritmos são como feitiços, garantindo segurança e desempenho.",
+		},
+		{
+			title: "Full Stack Infiltrado",
+			subtitle: "Das Sombras à Luz",
+			description:
+				"Navego pelas sombras do full stack, criando soluções infiltradas. Do front ao back, transformo códigos em experiências que emergem das trevas.",
+		},
+		{
+			title: "Suporte Criptônico",
+			subtitle: "Guardião do Código",
+			description:
+				"Vigio as linhas de código como um guardião da noite. Ofereço suporte técnico criptônico 24/7 para manter a paz no reino digital.",
+		},
+		{
+			title: "Consultor Hacker",
+			subtitle: "Estratégias Infiltradas",
+			description:
+				"Como um consultor hacker, desvendo os mistérios do seu projeto. Oriento com estratégias infiltradas para garantir o sucesso no mundo digital.",
+		},
+		{
+			title: "Mobile Hacker",
+			subtitle: "Apps Invasivos",
+			description:
+				"Penetro no universo móvel com apps hacker. Desenvolvo aplicações que invadem as expectativas, proporcionando uma experiência única aos usuários.",
+		},
+		{
+			title: "Integração Criptográfica",
+			subtitle: "Conexões Inquebráveis",
+			description:
+				"Especializado em integrar sistemas com conexões inquebráveis. Faço a comunicação entre diferentes componentes de software parecer um código cifrado.",
+		},
+		{
+			title: "E-commerce Hacker",
+			subtitle: "Transações Sombrias",
+			description:
+				"Domino as sombras do comércio eletrônico, desenvolvendo soluções hacker para transações online. Sua loja virtual, agora sob proteção digital máxima.",
+		},
+	];
+
 	useEffect(() => {
 		console.log("section", section);
 		if (!section) {
@@ -327,43 +383,65 @@ export default function Page() {
 								<div className="flex flex-col gap-8 max-w-lg transition-all">
 									<p
 										className={clsx("text-lg", {
-											"text-zinc-400": themeSelection === "dark",
+											"text-pink-300 !text-3xl ": themeSelection === "dark",
 											"text-zinc-600 font-medium": themeSelection === "light",
 										})}
 									>
-										Olá, meu nome é Guilherme
+										{themeSelection === "dark" ? "Deixe a procrastinação para trás" : "Olá, meu nome é Guilherme"}
 									</p>
 
 									<h1 className="text-3xl sm:text-5xl font-bold">
-										Sou um desenvolvedor <br />
+										{themeSelection === "dark" ? "É hora de programar o seu " : "Sou um desenvolvedor "}
+
+										{themeSelection === "light" && <br />}
 										<span
 											className={clsx("font-bold text-transparent bg-clip-text bg-gradient-to-r", {
 												" from-violet-600 to-pink-400": themeSelection === "dark",
 												" from-blue-500 to-cyan-600": themeSelection === "light",
 											})}
 										>
-											Full Stack.
+											{themeSelection === "dark" ? "amanhã. " : "Full Stack."}
 										</span>
 									</h1>
 
-									<p className="text-zinc-400 text-sm">
-										Eu sou um desenvolvedor Full Stack Web, com foco em ReactJS e NodeJS.
-									</p>
+									{themeSelection === "light" && (
+										<p className="text-zinc-400 text-sm">
+											Eu sou um desenvolvedor Full Stack Web, com foco em ReactJS e NodeJS.
+										</p>
+									)}
 
 									<button
 										type="button"
 										className={clsx(
-											" cursor-pointer px-5 py-3 rounded flex gap-4 justify-center items-center w-fit  shadow hover:bg-gradient-to-r font-bold transition-all duration-700 ease-in-out transform hover:scale-105",
+											" cursor-pointer px-5 py-3 rounded flex gap-4 justify-center items-center w-fit  shadow bg-gradient-to-r font-bold transition-all duration-700 ease-in-out transform hover:scale-105",
 											{
-												"bg-violet-500 from-violet-600 to-pink-400 hover:shadow-violet-300 hover:from-violet-400 hover:via-pink-400 hover:to-pink-600":
+												"bg-violet-400 from-violet-600 to-pink-400 hover:shadow-violet-300 hover:from-violet-400 hover:via-pink-400 hover:to-pink-600":
 													themeSelection === "dark",
 												"text-white bg-blue-500 from-blue-300 to-cyan-500 hover:shadow-blue-400 hover:from-blue-300 hover:via-cyan-500 hover:to-cyan-600":
 													themeSelection === "light",
 											},
 										)}
+										onClick={() => {
+											if (api) {
+												if (themeSelection === "dark") {
+													api.scrollTo(2);
+												} else {
+													api.scrollTo(1);
+												}
+											}
+										}}
 									>
-										Confira meus projetos
-										<HiOutlineArrowCircleRight size={20} />
+										{themeSelection === "light" ? (
+											<>
+												Confira mais sobre mim
+												<HiOutlineArrowCircleRight size={20} />
+											</>
+										) : (
+											<>
+												<HiOutlineFire size={20} />
+												Confira meus serviços
+											</>
+										)}
 									</button>
 								</div>
 
@@ -371,7 +449,7 @@ export default function Page() {
 									className={clsx(
 										"hidden lg:flex rounded-full border-4 border-solid  relative overflow-hidden bg shadow-lg ",
 										{
-											"bg-backgroundCustom-primary text-white border-violet-600 shadow-violet-300":
+											"bg-backgroundCustom-primary text-white border-pink-300 shadow-violet-800":
 												themeSelection === "dark",
 											"bg-foregroundCustom-primary text-black border-blue-500 shadow-blue-600":
 												themeSelection === "light",
@@ -379,7 +457,7 @@ export default function Page() {
 									)}
 								>
 									<Image
-										src="/avatar.png"
+										src={themeSelection === "dark" ? "/avatar_dark.png" : "/avatar_light.png"}
 										priority
 										alt="Hero"
 										className="w-[250px]  h-[250px] sm:w-[500px] sm:h-[500px]"
@@ -406,12 +484,12 @@ export default function Page() {
 							>
 								<div
 									className={clsx("rounded-full border-4 border-solid  relative overflow-hidden bg shadow-lg ", {
-										"bg-zinc-800 text-white border-violet-600 shadow-violet-300 ": themeSelection === "dark",
+										"bg-zinc-800 text-white border-pink-300 shadow-violet-800": themeSelection === "dark",
 										"bg-zinc-200 text-black border-blue-500 shadow-blue-600": themeSelection === "light",
 									})}
 								>
 									<Image
-										src="/avatar.png"
+										src={themeSelection === "dark" ? "/avatar_dark_2.jpeg" : "/avatar_light_2.png"}
 										priority
 										alt="Hero"
 										className="w-[250px]  h-[250px] sm:w-[500px] sm:h-[500px]"
@@ -420,7 +498,7 @@ export default function Page() {
 									/>
 								</div>
 
-								<div className="flex flex-col gap-8 max-w-lg ">
+								<div className="flex flex-col gap-8 max-w-lg font-bold ">
 									<p
 										className={clsx("text-lg", {
 											"text-white": themeSelection === "dark",
@@ -449,13 +527,17 @@ export default function Page() {
 
 									<p
 										className={clsx("text-sm leading-7", {
-											"text-zinc-400": themeSelection === "dark",
+											"text-pink-300 font-medium": themeSelection === "dark",
 											"text-zinc-600": themeSelection === "light",
 										})}
 									>
-										Olá, meu nome é Guilherme Cardilho, sou desenvolvedor web Full Stack, com foco em ReactJS e NodeJS a
+										{themeSelection === "light"
+											? `Olá, meu nome é Guilherme Cardilho, sou desenvolvedor web Full Stack, com foco em ReactJS e NodeJS a
 										2 anos e sou apaixonado por tecnologia e inovação, por isso sempre estou buscando novos
-										conhecimentos e desafios.
+										conhecimentos e desafios.`
+											: `
+											Eaí, beleza? Sou o cara dos códigos mágicos, o alquimista da web! 🚀 Se sua ideia é um tesouro escondido, eu sou o Indiana Jones do desenvolvimento, pronto para desbravar os bits e bytes e transformar tudo em algo incrível!
+											`}
 									</p>
 
 									<div className="flex gap-4 flex-col">
@@ -505,7 +587,14 @@ export default function Page() {
 							>
 								<div className="flex flex-col gap-10 px-20">
 									<div className="flex flex-col gap-2">
-										<p>Serviços que já prestei para empresas e clientes</p>
+										<p
+											className={clsx({
+												"text-zinc-300": themeSelection === "dark",
+												"text-zinc-600": themeSelection === "light",
+											})}
+										>
+											Serviços que já prestei para empresas e clientes
+										</p>
 
 										<h1
 											className={clsx("text-3xl sm:text-5xl l font-bold", {
@@ -526,165 +615,268 @@ export default function Page() {
 									</div>
 
 									<div className="flex gap-6 flex-wrap h-full justify-start text-justify items-start">
-										{services.map((service, index) => (
-											<button
-												type="button"
-												className={clsx(
-													"hidden md:flex flex-col text-start duration-500 cursor-pointer justify-start items-start  min-h-[325px] p-4 rounded-md shadow gap-4  min-w-[300px] flex-1  transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
-													{
-														"bg-gradient-to-r from-violet-600 to-pink-400 ":
-															servicesOnHover === index ||
-															(servicesClicked.includes(index) && themeSelection === "dark"),
-														"bg-gradient-to-r from-blue-500 to-cyan-600 ":
-															servicesOnHover === index ||
-															(servicesClicked.includes(index) && themeSelection === "light"),
-														"bg-zinc-800 text-white hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
-															themeSelection === "dark",
-														"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-300 hover:via-cyan-400 hover:to-cyan-500":
-															themeSelection === "light",
-													},
-												)}
-												key={service.title}
-												onMouseEnter={() => {
-													setServicesOnHover(index);
-												}}
-												onMouseLeave={() => {
-													setServicesOnHover(null);
-												}}
-												onClick={() => {
-													if (!servicesClicked.includes(index)) {
-														setServicesClicked((prev) => [...prev, index]);
-													} else {
-														setServicesClicked((prev) => prev.filter((item) => item !== index));
-													}
-												}}
-											>
-												<p
-													className={clsx("text-md", {
-														"text-pink-400": servicesOnHover !== index && index % 2 === 0 && themeSelection === "dark",
-														"text-violet-400":
-															servicesOnHover !== index && index % 2 !== 0 && themeSelection === "dark",
-														"!text-white":
-															servicesOnHover === index ||
-															(servicesClicked.includes(index) && themeSelection === "dark"),
-														"text-blue-500": servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
-														"text-cyan-600": servicesOnHover !== index && index % 2 !== 0 && themeSelection === "light",
-														"!text-black":
-															servicesOnHover === index ||
-															(servicesClicked.includes(index) && themeSelection === "light"),
-													})}
-												>
-													{service.subtitle}
-												</p>
-
-												<h2
-													className={clsx("text-lg uppercase font-bold justify-start items-start ", {
-														"text-white": servicesOnHover === index || themeSelection === "dark",
-														"text-black": themeSelection === "light",
-													})}
-												>
-													{service.title}
-												</h2>
-
-												<p
-													className={clsx("text-sm leading-6 justify-start items-center flex ", {
-														"!text-white":
-															(servicesOnHover === index || servicesClicked.includes(index)) &&
-															themeSelection === "dark",
-														"!text-black":
-															(servicesOnHover === index || servicesClicked.includes(index)) &&
-															themeSelection === "light",
-														"text-zinc-300": themeSelection === "dark",
-														"text-zinc-600": themeSelection === "light",
-													})}
-												>
-													{service.description}
-												</p>
-											</button>
-										))}
-
-										{services.map((service, index) => {
-											if (index > 4 && !servicesOpen) return;
-											return (
-												<button
-													type="button"
-													className={clsx(
-														" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
-														{
-															"bg-gradient-to-r from-violet-600 to-pink-400 ":
-																servicesOnHover === index ||
-																(servicesClicked.includes(index) && themeSelection === "dark"),
-															"bg-gradient-to-r from-blue-500 to-cyan-600 ":
-																servicesOnHover === index ||
-																(servicesClicked.includes(index) && themeSelection === "light"),
-															"bg-zinc-800 text-white hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
-																themeSelection === "dark",
-															"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-500 hover:via-cyan-600 hover:to-cyan-800":
-																themeSelection === "light",
-														},
-													)}
-													key={service.title}
-													onMouseEnter={() => {
-														setServicesOnHover(index);
-													}}
-													onMouseLeave={() => {
-														setServicesOnHover(null);
-													}}
-													onClick={() => {
-														if (!servicesClicked.includes(index)) {
-															setServicesClicked((prev) => [...prev, index]);
-														} else {
-															setServicesClicked((prev) => prev.filter((item) => item !== index));
-														}
-													}}
-												>
-													<p
-														className={clsx("text-md", {
-															"text-pink-400":
-																servicesOnHover !== index && index % 2 === 0 && themeSelection === "dark",
-															"text-violet-400":
-																servicesOnHover !== index && index % 2 !== 0 && themeSelection === "dark",
-															"!text-white":
-																servicesOnHover === index ||
-																(servicesClicked.includes(index) && themeSelection === "dark"),
-															"text-blue-500":
-																servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
-															"text-cyan-600":
-																servicesOnHover !== index && index % 2 !== 0 && themeSelection === "light",
-															"!text-black":
-																servicesOnHover === index ||
-																(servicesClicked.includes(index) && themeSelection === "light"),
-														})}
+										{themeSelection === "dark" ? (
+											<>
+												{servicesHacker.map((service, index) => (
+													<button
+														type="button"
+														className={clsx(
+															"hidden md:flex flex-col text-start duration-500 cursor-pointer justify-start items-start  min-h-[225px] p-4 rounded-md shadow gap-4  min-w-[300px] flex-1  transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
+															{
+																"bg-gradient-to-r from-violet-600 to-pink-400 ":
+																	servicesOnHover === index ||
+																	(servicesClicked.includes(index) && themeSelection === "dark"),
+																"bg-zinc-800 text-white hover:ring-pink-300 hover:ring hover:ring-solid hover:shadow-violet-800 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
+																	themeSelection === "dark",
+															},
+														)}
+														key={service.title}
+														onMouseEnter={() => {
+															setServicesOnHover(index);
+														}}
+														onMouseLeave={() => {
+															setServicesOnHover(null);
+														}}
+														onClick={() => {
+															if (!servicesClicked.includes(index)) {
+																setServicesClicked((prev) => [...prev, index]);
+															} else {
+																setServicesClicked((prev) => prev.filter((item) => item !== index));
+															}
+														}}
 													>
-														{service.subtitle}
-													</p>
+														<p
+															className={clsx("text-md", {
+																"text-pink-400":
+																	servicesOnHover !== index && index % 2 === 0 && themeSelection === "dark",
+																"text-violet-400":
+																	servicesOnHover !== index && index % 2 !== 0 && themeSelection === "dark",
+																"!text-white":
+																	servicesOnHover === index ||
+																	(servicesClicked.includes(index) && themeSelection === "dark"),
+															})}
+														>
+															{service.subtitle}
+														</p>
 
-													<h2
-														className={clsx("text-lg uppercase font-bold justify-start items-start ", {
-															"text-white": servicesOnHover === index || themeSelection === "dark",
-															"text-black": themeSelection === "light",
-														})}
-													>
-														{service.title}
-													</h2>
+														<h2
+															className={clsx("text-lg uppercase font-bold justify-start items-start ", {
+																"text-white": servicesOnHover === index || themeSelection === "dark",
+															})}
+														>
+															{service.title}
+														</h2>
 
-													<p
-														className={clsx("text-sm leading-6 justify-start items-center flex ", {
-															"!text-white":
-																(servicesOnHover === index || servicesClicked.includes(index)) &&
-																themeSelection === "dark",
-															"!text-black":
-																(servicesOnHover === index || servicesClicked.includes(index)) &&
-																themeSelection === "light",
-															"text-zinc-300": themeSelection === "dark",
-															"text-zinc-600": themeSelection === "light",
-														})}
+														<p
+															className={clsx("text-sm leading-6 justify-start items-center flex ", {
+																"!text-white":
+																	(servicesOnHover === index || servicesClicked.includes(index)) &&
+																	themeSelection === "dark",
+																"text-zinc-300": themeSelection === "dark",
+															})}
+														>
+															{service.description}
+														</p>
+													</button>
+												))}
+
+												{services.map((service, index) => {
+													if (index > 4 && !servicesOpen) return;
+													return (
+														<button
+															type="button"
+															className={clsx(
+																" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
+																{
+																	"bg-gradient-to-r from-violet-600 to-pink-400 ":
+																		servicesOnHover === index ||
+																		(servicesClicked.includes(index) && themeSelection === "dark"),
+																	"bg-zinc-800 text-white hover:shadow-violet-700 hover:ring-pink-300 hover:ring hover:ring-solid hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
+																		themeSelection === "dark",
+																},
+															)}
+															key={service.title}
+															onMouseEnter={() => {
+																setServicesOnHover(index);
+															}}
+															onMouseLeave={() => {
+																setServicesOnHover(null);
+															}}
+															onClick={() => {
+																if (!servicesClicked.includes(index)) {
+																	setServicesClicked((prev) => [...prev, index]);
+																} else {
+																	setServicesClicked((prev) => prev.filter((item) => item !== index));
+																}
+															}}
+														>
+															<p
+																className={clsx("text-md", {
+																	"text-pink-400":
+																		servicesOnHover !== index && index % 2 === 0 && themeSelection === "dark",
+																	"text-violet-400":
+																		servicesOnHover !== index && index % 2 !== 0 && themeSelection === "dark",
+																	"!text-white":
+																		servicesOnHover === index ||
+																		(servicesClicked.includes(index) && themeSelection === "dark"),
+																})}
+															>
+																{service.subtitle}
+															</p>
+
+															<h2
+																className={clsx("text-lg uppercase font-bold justify-start items-start ", {
+																	"text-white": servicesOnHover === index || themeSelection === "dark",
+																})}
+															>
+																{service.title}
+															</h2>
+
+															<p
+																className={clsx("text-sm leading-6 justify-start items-center flex ", {
+																	"!text-white":
+																		(servicesOnHover === index || servicesClicked.includes(index)) &&
+																		themeSelection === "dark",
+																})}
+															>
+																{service.description}
+															</p>
+														</button>
+													);
+												})}
+											</>
+										) : (
+											<>
+												{services.map((service, index) => (
+													<button
+														type="button"
+														className={clsx(
+															"hidden md:flex flex-col text-start duration-500 cursor-pointer justify-start items-start  min-h-[325px] p-4 rounded-md shadow gap-4  min-w-[300px] flex-1  transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
+															{
+																"bg-gradient-to-r from-blue-500 to-cyan-600 ":
+																	servicesOnHover === index ||
+																	(servicesClicked.includes(index) && themeSelection === "light"),
+																"bg-zinc-200 text-black hover:shadow-blue-500 hover:ring-blue-300 hover:ring hover:ring-solid  hover:from-blue-300 hover:via-cyan-400 hover:to-cyan-500":
+																	themeSelection === "light",
+															},
+														)}
+														key={service.title}
+														onMouseEnter={() => {
+															setServicesOnHover(index);
+														}}
+														onMouseLeave={() => {
+															setServicesOnHover(null);
+														}}
+														onClick={() => {
+															if (!servicesClicked.includes(index)) {
+																setServicesClicked((prev) => [...prev, index]);
+															} else {
+																setServicesClicked((prev) => prev.filter((item) => item !== index));
+															}
+														}}
 													>
-														{service.description}
-													</p>
-												</button>
-											);
-										})}
+														<p
+															className={clsx("text-md", {
+																"text-blue-500":
+																	servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
+																"text-cyan-600":
+																	servicesOnHover !== index && index % 2 !== 0 && themeSelection === "light",
+																"!text-black":
+																	servicesOnHover === index ||
+																	(servicesClicked.includes(index) && themeSelection === "light"),
+															})}
+														>
+															{service.subtitle}
+														</p>
+
+														<h2
+															className={clsx("text-lg uppercase font-bold justify-start items-start ", {
+																"text-black": themeSelection === "light",
+															})}
+														>
+															{service.title}
+														</h2>
+
+														<p
+															className={clsx("text-sm leading-6 justify-start items-center flex ", {
+																"!text-black":
+																	(servicesOnHover === index || servicesClicked.includes(index)) &&
+																	themeSelection === "light",
+																"text-zinc-600": themeSelection === "light",
+															})}
+														>
+															{themeSelection === "light" && service.description}
+														</p>
+													</button>
+												))}
+
+												{services.map((service, index) => {
+													if (index > 4 && !servicesOpen) return;
+													return (
+														<button
+															type="button"
+															className={clsx(
+																" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
+																{
+																	"bg-gradient-to-r from-blue-500 to-cyan-600 ":
+																		servicesOnHover === index ||
+																		(servicesClicked.includes(index) && themeSelection === "light"),
+																	"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-500 hover:ring-blue-300 hover:ring hover:ring-solid  hover:via-cyan-600 hover:to-cyan-800":
+																		themeSelection === "light",
+																},
+															)}
+															key={service.title}
+															onMouseEnter={() => {
+																setServicesOnHover(index);
+															}}
+															onMouseLeave={() => {
+																setServicesOnHover(null);
+															}}
+															onClick={() => {
+																if (!servicesClicked.includes(index)) {
+																	setServicesClicked((prev) => [...prev, index]);
+																} else {
+																	setServicesClicked((prev) => prev.filter((item) => item !== index));
+																}
+															}}
+														>
+															<p
+																className={clsx("text-md", {
+																	"text-blue-500":
+																		servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
+																	"text-cyan-600":
+																		servicesOnHover !== index && index % 2 !== 0 && themeSelection === "light",
+																	"!text-black":
+																		servicesOnHover === index ||
+																		(servicesClicked.includes(index) && themeSelection === "light"),
+																})}
+															>
+																{service.subtitle}
+															</p>
+
+															<h2
+																className={clsx("text-lg uppercase font-bold justify-start items-start ", {
+																	"text-black": themeSelection === "light",
+																})}
+															>
+																{service.title}
+															</h2>
+
+															<p
+																className={clsx("text-sm leading-6 justify-start items-center flex ", {
+																	"!text-black":
+																		(servicesOnHover === index || servicesClicked.includes(index)) &&
+																		themeSelection === "light",
+																	"text-zinc-600": themeSelection === "light",
+																})}
+															>
+																{themeSelection === "light" && service.description}
+															</p>
+														</button>
+													);
+												})}
+											</>
+										)}
 
 										<button
 											type="button"
@@ -701,7 +893,7 @@ export default function Page() {
 														themeSelection === "light",
 												},
 												{
-													"bg-zinc-800  hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white":
+													"bg-zinc-800  hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white ":
 														themeSelection === "dark",
 													"bg-zinc-200 text-black": themeSelection === "light",
 												},
