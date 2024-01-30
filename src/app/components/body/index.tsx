@@ -13,7 +13,7 @@ export const BodyTheme = ({ className, children }: IProps) => {
 
 	return (
 		<body
-			className={clsx("z-0 overflow-y-hidden", {
+			className={clsx("z-0", {
 				"bg-backgroundCustom-primary text-white": themeSelection === "dark",
 				"bg-foregroundCustom-primary text-black shadow-lg border-b-1 border-solid border-zinc-200":
 					themeSelection === "light",
