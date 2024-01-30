@@ -15,6 +15,8 @@ import {
 	HiOutlineFire,
 } from "react-icons/hi";
 
+import { Steps } from "intro.js-react";
+
 export default function Page() {
 	const { enabled: themeSelection } = useTheme();
 
@@ -29,6 +31,7 @@ export default function Page() {
 	const [directionScroll, setDirectionScroll] = useState<"up" | "down" | null>("down");
 	const [verifyScroll, setVerifyScroll] = useState(true);
 	const [timeOut, setTimeOut] = useState<NodeJS.Timeout | null>(null);
+	const [intro, setIntro] = useState(false);
 
 	const { section } = useHomeSection();
 
@@ -311,8 +314,20 @@ export default function Page() {
 		},
 	];
 
+	const steps = [
+		{
+			element: "#DarkMode",
+			intro: "Venha conhecer o lado hacker da força.",
+			position: "bottom",
+		},
+		{
+			element: "#Slider",
+			intro: "Você pode navegar entre as seções do meu portfólio clicando e arrastando o slider abaixo.",
+			position: "top",
+		},
+	];
+
 	useEffect(() => {
-		console.log("section", section);
 		if (!section) {
 			return;
 		}
@@ -328,16 +343,28 @@ export default function Page() {
 		}
 	}, [section, api]);
 
+	useEffect(() => {
+		const intro = localStorage.getItem("intro");
+		if (!intro) {
+			setIntro(true);
+			localStorage.setItem("intro", "true");
+		}
+	}, []);
+
 	const [mounted, setMounted] = useState(false);
 	useEffect(() => {
 		setMounted(true);
 	}, []);
 	if (!mounted) {
-		return null; // return this null to avoid hydration errors
+		return (
+			<div>
+				<div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500" />
+			</div>
+		);
 	}
 
 	return (
-		<div className="flex w-full h-full">
+		<div className="flex w-full h-full" suppressHydrationWarning>
 			<div
 				className={clsx("fixed flex w-full h-full", {
 					"bg-backgroundCustom-primary": themeSelection === "dark",
@@ -377,7 +404,7 @@ export default function Page() {
 									},
 								)}
 							>
-								<div className="flex flex-col gap-8 max-w-lg transition-all">
+								<div className="flex flex-col gap-8 max-w-lg transition-all text-center justify-center items-center sm:text-start sm:justify-start sm:items-start">
 									<p
 										className={clsx("text-lg", {
 											"text-pink-300 !text-3xl ": themeSelection === "dark",
@@ -495,7 +522,7 @@ export default function Page() {
 									/>
 								</div>
 
-								<div className="flex flex-col gap-8 max-w-lg font-bold ">
+								<div className="flex flex-col gap-8 max-w-lg font-bold sm:p-0 p-4 sm:text-start text-justify">
 									<p
 										className={clsx("text-lg", {
 											"text-white": themeSelection === "dark",
@@ -582,7 +609,7 @@ export default function Page() {
 									"bg-foregroundCustom-primary text-black": themeSelection === "light",
 								})}
 							>
-								<div className="flex flex-col gap-10 px-20">
+								<div className="flex flex-col gap-10 sm:px-20 p-8">
 									<div className="flex flex-col gap-2">
 										<p
 											className={clsx({
@@ -620,7 +647,7 @@ export default function Page() {
 														className={clsx(
 															"hidden md:flex flex-col text-start duration-500 cursor-pointer justify-start items-start  min-h-[225px] p-4 rounded-md shadow gap-4  min-w-[300px] flex-1  transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
 															{
-																"bg-gradient-to-r from-violet-600 to-pink-400 ":
+																" bg-gradient-to-r from-violet-600 to-pink-400 ":
 																	servicesOnHover === index ||
 																	(servicesClicked.includes(index) && themeSelection === "dark"),
 																"bg-zinc-800 text-white hover:ring-pink-300 hover:ring hover:ring-solid hover:shadow-violet-800 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
@@ -815,10 +842,10 @@ export default function Page() {
 															className={clsx(
 																" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
 																{
-																	"bg-gradient-to-r from-blue-500 to-cyan-600 ":
+																	"text-white bg-gradient-to-r from-blue-500 to-cyan-800 ":
 																		servicesOnHover === index ||
 																		(servicesClicked.includes(index) && themeSelection === "light"),
-																	"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-500 hover:ring-blue-300 hover:ring hover:ring-solid  hover:via-cyan-600 hover:to-cyan-800":
+																	"bg-zinc-200 text-black hover:shadow-blue-500 hover:ring-blue-300 hover:ring hover:ring-solid  hover:from-blue-500 hover:via-cyan-500 hover:to-cyan-600":
 																		themeSelection === "light",
 																},
 															)}
@@ -838,12 +865,12 @@ export default function Page() {
 															}}
 														>
 															<p
-																className={clsx("text-md", {
+																className={clsx("text-md font-medium transition-all", {
 																	"text-blue-500":
 																		servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
 																	"text-cyan-600":
 																		servicesOnHover !== index && index % 2 !== 0 && themeSelection === "light",
-																	"!text-black":
+																	"!text-white font-bold":
 																		servicesOnHover === index ||
 																		(servicesClicked.includes(index) && themeSelection === "light"),
 																})}
@@ -861,7 +888,7 @@ export default function Page() {
 
 															<p
 																className={clsx("text-sm leading-6 justify-start items-center flex ", {
-																	"!text-black":
+																	"!text-white":
 																		(servicesOnHover === index || servicesClicked.includes(index)) &&
 																		themeSelection === "light",
 																	"text-zinc-600": themeSelection === "light",
@@ -884,12 +911,10 @@ export default function Page() {
 														(servicesOnHover === services.length + 1 ||
 															servicesClicked.includes(services.length + 1)) &&
 														themeSelection === "dark",
-													"bg-gradient-to-r from-blue-500 to-cyan-600":
+													"bg-gradient-to-r from-blue-500 to-cyan-400":
 														(servicesOnHover === services.length + 1 ||
 															servicesClicked.includes(services.length + 1)) &&
 														themeSelection === "light",
-												},
-												{
 													"bg-zinc-800  hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white ":
 														themeSelection === "dark",
 													"bg-zinc-200 text-black": themeSelection === "light",
@@ -913,7 +938,7 @@ export default function Page() {
 											}}
 										>
 											<p
-												className={clsx("text-md justify-start items-start flex w-full", {
+												className={clsx("text-md justify-start items-start flex w-full transition-all font-bold", {
 													"text-pink-400":
 														servicesOnHover !== services.length + 1 &&
 														services.length + (1 % 2) === 0 &&
@@ -931,11 +956,11 @@ export default function Page() {
 														servicesOnHover !== services.length + 1 &&
 														services.length + (1 % 2) === 0 &&
 														themeSelection === "light",
-													"text-cyan-600":
+													"text-blue-500 font-medium":
 														servicesOnHover !== services.length + 1 &&
 														services.length + (1 % 2) !== 0 &&
 														themeSelection === "light",
-													"!text-black":
+													" !text-white font-bold":
 														(servicesOnHover === services.length + 1 ||
 															servicesClicked.includes(services.length + 1)) &&
 														themeSelection === "light",
@@ -958,10 +983,10 @@ export default function Page() {
 					<button
 						type="button"
 						className={clsx(
-							"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate",
+							"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate font-bold",
 							{
 								"text-white": themeSelection === "dark",
-								"text-black": themeSelection === "light",
+								"text-black ": themeSelection === "light",
 							},
 						)}
 						onClick={() => {
@@ -978,6 +1003,7 @@ export default function Page() {
 					className="flex flex-col gap-2 justify-center items-center absolute bottom-8 flex-nowrap right-1/2 left-1/2 transform traslate-x-1/2"
 				>
 					<button
+						id="Slider"
 						type="button"
 						className={clsx(
 							"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate font-bold",
@@ -996,6 +1022,40 @@ export default function Page() {
 				</TransitionDefault>
 			</div>
 			<div className="h-[1000px] 	" />
+			<Steps
+				enabled={intro}
+				steps={steps}
+				initialStep={0}
+				onExit={() => {
+					setIntro(false);
+				}}
+				options={{
+					nextLabel: "Próximo",
+					prevLabel: "Anterior",
+
+					doneLabel: "Finalizar",
+					showProgress: false,
+					scrollToElement: true,
+					scrollPadding: 100,
+					hidePrev: false,
+					hideNext: false,
+					hideDone: false,
+					showBullets: true,
+					exitOnOverlayClick: true,
+					exitOnEsc: true,
+					disableInteraction: true,
+					showStepNumbers: false,
+					keyboardNavigation: true,
+					overlayOpacity: 0.5,
+					tooltipClass: "",
+					highlightClass: "",
+					positionPrecedence: ["bottom", "top", "right", "left"],
+					disableFocus: false,
+					scrollTo: "tooltip",
+					scrollParent: false,
+					showButtons: true,
+				}}
+			/>
 		</div>
 	);
 }

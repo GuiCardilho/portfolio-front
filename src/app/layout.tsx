@@ -1,8 +1,7 @@
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
+import "intro.js/introjs.css";
 import { BodyTheme } from "./components/body";
 import "./globals.css";
 
@@ -22,10 +21,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="pt-BR">
+		<html lang="pt-BR" suppressHydrationWarning>
 			<BodyTheme className={poppins.className}>{children}</BodyTheme>
-			<SpeedInsights />
-			<Analytics />
 		</html>
 	);
 }

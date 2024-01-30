@@ -4,6 +4,7 @@ import { Switch } from "@headlessui/react";
 
 import { useHomeSection } from "@/store/homeSection";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { HiFaceSmile, HiOutlineFaceSmile } from "react-icons/hi2";
 import { IoSkull, IoSkullOutline } from "react-icons/io5";
 import { TransitionDefault } from "../transition";
@@ -32,6 +33,14 @@ export const Navbar = () => {
 
 	const { setSection } = useHomeSection();
 
+	const [mounted, setMounted] = useState(false);
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+	if (!mounted) {
+		return null;
+	}
+
 	return (
 		<div
 			className={clsx("flex justify-around py-4 fixed z-10 w-full", {
@@ -39,6 +48,7 @@ export const Navbar = () => {
 				"bg-foregroundCustom-primary text-black shadow-lg border-b-1 border-solid border-zinc-200":
 					themeSelection === "light",
 			})}
+			suppressHydrationWarning
 		>
 			<div className="font-bold hidden sm:flex gap-2">
 				Guilherme
@@ -52,7 +62,12 @@ export const Navbar = () => {
 				</span>
 			</div>
 
-			<div className="font-bold sm:hidden text-transparent bg-gradient-to-r from-violet-200 to-pink-300 bg-clip-text">
+			<div
+				className={clsx("font-bold sm:hidden text-transparent bg-gradient-to-r  bg-clip-text", {
+					"from-violet-600 to-pink-400": themeSelection === "dark",
+					"from-blue-500 to-cyan-600": themeSelection === "light",
+				})}
+			>
 				GC
 			</div>
 
@@ -83,7 +98,7 @@ export const Navbar = () => {
 				</ul>
 			</div>
 
-			<div className="flex  gap-1 sm:gap-5 justify-between">
+			<div className="flex  gap-1 sm:gap-5 justify-between" id="DarkMode">
 				<div className="relative w-6">
 					<TransitionDefault active={themeSelection !== "dark"} className="absolute left-0">
 						<HiFaceSmile className="text-2xl text-yellow-400 flex flex-col flex-1 w-full h-full gap-8 tall:gap-4" />
