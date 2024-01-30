@@ -267,10 +267,15 @@ export default function Page() {
 					opts={{
 						align: "center",
 						axis: "y",
-						//dragFree: true,
+						dragFree: true,
 						loop: true,
 						slidesToScroll: 1,
 						containScroll: "trimSnaps",
+						breakpoints: {
+							"(max-width: 1024px)": {
+								dragFree: true,
+							},
+						},
 					}}
 					setApi={setApi}
 				>
@@ -319,11 +324,11 @@ export default function Page() {
 									<button
 										type="button"
 										className={clsx(
-											" cursor-pointer px-5 py-3 rounded flex gap-4 justify-center items-center w-fit  shadow hover:bg-gradient-to-r  transition-all duration-700 ease-in-out transform hover:scale-105",
+											" cursor-pointer px-5 py-3 rounded flex gap-4 justify-center items-center w-fit  shadow hover:bg-gradient-to-r font-bold transition-all duration-700 ease-in-out transform hover:scale-105",
 											{
 												"bg-violet-500 from-violet-600 to-pink-400 hover:shadow-violet-300 hover:from-violet-400 hover:via-pink-400 hover:to-pink-600":
 													themeSelection === "dark",
-												"text-white bg-blue-500 from-blue-500 to-cyan-600 hover:shadow-blue-500 hover:from-blue-500 hover:via-cyan-600 hover:to-cyan-800":
+												"text-white bg-blue-500 from-blue-300 to-cyan-500 hover:shadow-blue-400 hover:from-blue-300 hover:via-cyan-500 hover:to-cyan-600":
 													themeSelection === "light",
 											},
 										)}
@@ -504,7 +509,7 @@ export default function Page() {
 															(servicesClicked.includes(index) && themeSelection === "light"),
 														"bg-zinc-800 text-white hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
 															themeSelection === "dark",
-														"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-500 hover:via-cyan-600 hover:to-cyan-800":
+														"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-300 hover:via-cyan-400 hover:to-cyan-500":
 															themeSelection === "light",
 													},
 												)}
@@ -551,7 +556,7 @@ export default function Page() {
 												</h2>
 
 												<p
-													className={clsx("text-sm   leading-6 justify-start items-center flex ", {
+													className={clsx("text-sm leading-6 justify-start items-center flex ", {
 														"!text-white":
 															(servicesOnHover === index || servicesClicked.includes(index)) &&
 															themeSelection === "dark",
@@ -573,21 +578,18 @@ export default function Page() {
 												<button
 													type="button"
 													className={clsx(
-														" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] hover:shadow-violet-700 transition-all  hover:scale-105 hover:bg-gradient-to-t hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white ",
+														" flex md:hidden flex-col flex-1 text-start duration-500 cursor-pointer p-4 rounded-md shadow gap-4 justify-start items-start  min-w-[300px] transition-all  hover:scale-105 hover:bg-gradient-to-t !text-white ",
 														{
-															"bg-gradient-to-r from-violet-600 to-pink-400":
+															"bg-gradient-to-r from-violet-600 to-pink-400 ":
 																servicesOnHover === index ||
 																(servicesClicked.includes(index) && themeSelection === "dark"),
-														},
-														{
-															"bg-gradient-to-r from-blue-500 to-cyan-600":
+															"bg-gradient-to-r from-blue-500 to-cyan-600 ":
 																servicesOnHover === index ||
 																(servicesClicked.includes(index) && themeSelection === "light"),
-														},
-
-														{
-															"bg-zinc-800 text-white": themeSelection === "dark",
-															"bg-zinc-200 text-black": themeSelection === "light",
+															"bg-zinc-800 text-white hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400":
+																themeSelection === "dark",
+															"bg-zinc-200 text-black hover:shadow-blue-500 hover:from-blue-500 hover:via-cyan-600 hover:to-cyan-800":
+																themeSelection === "light",
 														},
 													)}
 													key={service.title}
@@ -614,7 +616,6 @@ export default function Page() {
 															"!text-white":
 																servicesOnHover === index ||
 																(servicesClicked.includes(index) && themeSelection === "dark"),
-
 															"text-blue-500":
 																servicesOnHover !== index && index % 2 === 0 && themeSelection === "light",
 															"text-cyan-600":
@@ -627,13 +628,25 @@ export default function Page() {
 														{service.subtitle}
 													</p>
 
-													<h2 className="text-lg uppercase font-bold text-start justify-start items-start">
+													<h2
+														className={clsx("text-lg uppercase font-bold justify-start items-start ", {
+															"text-white": servicesOnHover === index || themeSelection === "dark",
+															"text-black": themeSelection === "light",
+														})}
+													>
 														{service.title}
 													</h2>
 
 													<p
-														className={clsx("text-sm text-zinc-300 leading-6  flex justify-start items-start  ", {
-															"!text-white": servicesOnHover === index || servicesClicked.includes(index),
+														className={clsx("text-sm leading-6 justify-start items-center flex ", {
+															"!text-white":
+																(servicesOnHover === index || servicesClicked.includes(index)) &&
+																themeSelection === "dark",
+															"!text-black":
+																(servicesOnHover === index || servicesClicked.includes(index)) &&
+																themeSelection === "light",
+															"text-zinc-300": themeSelection === "dark",
+															"text-zinc-600": themeSelection === "light",
 														})}
 													>
 														{service.description}
@@ -645,7 +658,7 @@ export default function Page() {
 										<button
 											type="button"
 											className={clsx(
-												" flex md:hidden flex-col flex-1 justify-start items-start duration-500 cursor-pointer  p-4 rounded-md shadow gap-4  min-w-[300px] hover:shadow-violet-700 transition-all  hover:scale-105 hover:bg-gradient-to-t hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white ",
+												" flex md:hidden flex-col flex-1 justify-start items-start duration-500 cursor-pointer  p-4 rounded-md shadow gap-4  min-w-[300px]  transition-all  hover:scale-105 hover:bg-gradient-to-t   ",
 												{
 													"bg-gradient-to-r from-violet-600 to-pink-400":
 														(servicesOnHover === services.length + 1 ||
@@ -657,7 +670,8 @@ export default function Page() {
 														themeSelection === "light",
 												},
 												{
-													"bg-zinc-800 text-white": themeSelection === "dark",
+													"bg-zinc-800  hover:shadow-violet-700 hover:from-violet-600 hover:via-violet-400 hover:to-pink-400 !text-white":
+														themeSelection === "dark",
 													"bg-zinc-200 text-black": themeSelection === "light",
 												},
 											)}
@@ -746,10 +760,10 @@ export default function Page() {
 					<button
 						type="button"
 						className={clsx(
-							"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate",
+							"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate font-bold",
 							{
 								"text-white": themeSelection === "dark",
-								"text-black": themeSelection === "light",
+								"text-black ": themeSelection === "light",
 							},
 						)}
 						onClick={() => {
