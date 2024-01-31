@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { HomePageIntro } from "./components/intro";
 import { ReadMoreButton } from "./components/readMoreButton";
 import { HomeSectionAbout } from "./sections/about";
+import { HomeSectionContact } from "./sections/contact";
 import { HomeSectionInitial } from "./sections/home";
 import { HomeSectionServices } from "./sections/services";
 
@@ -123,6 +124,10 @@ export default function Page() {
 		{
 			id: "servicos",
 			render: <HomeSectionServices />,
+		},
+		{
+			id: "contato",
+			render: <HomeSectionContact />,
 		},
 	];
 

@@ -153,7 +153,7 @@ export const HomeSectionAbout = () => {
 
 				<p
 					className={clsx("text-sm leading-7", {
-						"text-pink-300 font-medium": themeSelection === "dark",
+						"text-pink-100 font-medium": themeSelection === "dark",
 						"text-zinc-600": themeSelection === "light",
 					})}
 				>
