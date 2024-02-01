@@ -52,12 +52,13 @@ export const ReadMoreButton = ({
 		<Fragment>
 			<TransitionDefault
 				active={directionScroll === "up"}
-				className="flex flex-col gap-2 justify-center items-center absolute bottom-8 flex-nowrap right-1/2 left-1/2 transform traslate-x-1/2 "
+				className="flex flex-col gap-2 justify-center items-center fixed bottom-8 flex-nowrap right-1/2 left-1/2 transform traslate-x-1/2 "
 			>
 				<button
+					id="Slider"
 					type="button"
 					className={clsx(
-						"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate font-bold",
+						"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap fixed line-clamp-1 truncate font-bold",
 						{
 							"text-white": themeSelection === "dark",
 							"text-black ": themeSelection === "light",
@@ -74,13 +75,13 @@ export const ReadMoreButton = ({
 
 			<TransitionDefault
 				active={directionScroll === "down"}
-				className="flex flex-col gap-2 justify-center items-center absolute bottom-8 flex-nowrap right-1/2 left-1/2 transform traslate-x-1/2"
+				className="flex flex-col gap-2 justify-center items-center fixed bottom-8 flex-nowrap right-1/2 left-1/2 transform traslate-x-1/2"
 			>
 				<button
 					id="Slider"
 					type="button"
 					className={clsx(
-						"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap absolute line-clamp-1 truncate font-bold",
+						"animate-bounce items-center flex flex-col cursor-pointer  justify-center z-20 flex-nowrap fixed line-clamp-1 truncate font-bold",
 						{
 							"text-white": themeSelection === "dark",
 							"text-black ": themeSelection === "light",

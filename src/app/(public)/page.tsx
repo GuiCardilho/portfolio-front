@@ -13,6 +13,8 @@ import { HomeSectionContact } from "./sections/contact";
 import { HomeSectionInitial } from "./sections/home";
 import { HomeSectionServices } from "./sections/services";
 
+import { debounce } from "lodash";
+
 export default function Page() {
 	const { enabled: themeSelection } = useTheme();
 	const { section } = useHomeSection();
@@ -21,11 +23,11 @@ export default function Page() {
 	const [currentSlider, setCurrentSlider] = useState(0);
 	const [countSlider, setCountSlider] = useState(0);
 	const [directionScroll, setDirectionScroll] = useState<"up" | "down" | null>("down");
-	const [verifyScroll, setVerifyScroll] = useState(true);
-	const [timeOut, setTimeOut] = useState<NodeJS.Timeout | null>(null);
 
-	useMotionValueEvent(scrollY, "change", (latest) => {
-		if (latest > 2 && directionScroll === "up") {
+	const [lestScroll, setLestScroll] = useState(0);
+
+	const handleScroll = debounce((latest: number) => {
+		if (latest > lestScroll && directionScroll === "up") {
 			setDirectionScroll("down");
 
 			if (api && api.selectedScrollSnap() < 3) {
@@ -35,7 +37,7 @@ export default function Page() {
 			return;
 		}
 
-		if (latest < 2 && directionScroll === "down") {
+		if (latest < lestScroll && directionScroll === "down") {
 			setDirectionScroll("up");
 
 			if (api && api.selectedScrollSnap() > 0) {
@@ -45,30 +47,33 @@ export default function Page() {
 			return;
 		}
 
-		if (latest !== 2) {
-			setVerifyScroll(false);
-
-			if (api && verifyScroll) {
+		if (latest !== lestScroll) {
+			if (api) {
 				const selectedSnap = api.selectedScrollSnap();
-				if (latest < 2 && selectedSnap >= 0) {
+
+				if (latest < lestScroll && api.canScrollPrev()) {
 					api.scrollTo(selectedSnap - 1);
-				} else if (latest > 2 && selectedSnap < 3) {
+				} else if (latest > lestScroll && api.canScrollNext()) {
 					api.scrollTo(selectedSnap + 1);
 				}
 			}
 		}
 
-		setTimeOut(
-			setTimeout(() => {
-				scrollY.set(2);
-				window.scrollTo(0, 2);
-				setVerifyScroll(true);
-			}, 1000),
-		);
-		if (timeOut) {
-			clearTimeout(timeOut);
+		setLestScroll(latest);
+
+		if (latest === 0 || latest === 100000) {
+			if (latest === 0) {
+				setDirectionScroll("up");
+			}
+			if (latest === 100000) {
+				setDirectionScroll("down");
+			}
+			window.scrollTo(0, 50000);
+			setLestScroll(50000);
 		}
-	});
+	}, 50);
+
+	useMotionValueEvent(scrollY, "change", handleScroll);
 
 	useEffect(() => {
 		if (!api) {
@@ -135,6 +140,13 @@ export default function Page() {
 	useEffect(() => {
 		setMounted(true);
 	}, []);
+
+	useEffect(() => {
+		if (typeof window !== "undefined" && mounted) {
+			window.scrollTo(0, 50000);
+		}
+	}, [mounted]);
+
 	if (!mounted) {
 		return (
 			<div>
@@ -168,7 +180,7 @@ export default function Page() {
 				</Carousel>
 			</div>
 
-			<div className="h-[1000px] 	" />
+			<div className="h-[100000px] 	" />
 
 			<ReadMoreButton
 				api={api}
